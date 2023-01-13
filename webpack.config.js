@@ -1,6 +1,7 @@
 const path = require('path');
 const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = (env) => {
   console.log('Production: ', env); // true
@@ -33,6 +34,10 @@ module.exports = (env) => {
       }
     },
     plugins: [
+      new Dotenv({
+        path: path.resolve(`.env.${env.mode}`),
+        defaults: path.resolve('.env')
+      }),
       new NodePolyfillPlugin()
     ],
     externals: [nodeExternals()]
