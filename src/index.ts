@@ -1,7 +1,6 @@
 import beikeTask from "./features/beike";
 import * as schedule from 'node-schedule'
 import osChinaTask from "./features/oschina";
-import dayjs = require("dayjs");
 import { log } from "./utils";
 
 log('🚀 启动任务~')
