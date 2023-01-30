@@ -1,5 +1,6 @@
 import axios from "axios";
 import * as crypto from "crypto"
+import { log } from ".";
 
 const baseURL = 'https://oapi.dingtalk.com';
 
@@ -66,10 +67,10 @@ class DingTalk {
       }
     }
     axios.post(baseURL + this._webhookUrl, postData).then((res) => {
-      console.log('发送消息成功！');
+      log('发送消息成功！', JSON.stringify(postData));
     }).catch(err => {
-      console.log('发送失败！');
-      console.log(err)
+      log('发送失败！');
+      log(err)
     });
   }
 }

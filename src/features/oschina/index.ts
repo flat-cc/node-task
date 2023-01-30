@@ -3,6 +3,7 @@ import DingTalk from "../../utils/dingTalk";
 import { getOSchinaNewList } from "./api";
 import { deFormatTime } from "./utils";
 import cheerio from "cheerio";
+import { log } from "../../utils";
 
 
 const dayjs = require('dayjs')
@@ -53,7 +54,7 @@ const geNewstList = async (page = 1) => {
 
 const osChinaTask = () => {
   geNewstList().then((list) => {
-    console.log(`共抓取${list.length}数据`);
+    log(`共抓取${list.length}数据`);
     const talk = new DingTalk(config)
     talk.pushFeedCard(list.map((item) => {
       const query = {
