@@ -1,5 +1,6 @@
 import to from 'await-to-js';
 import { createConnection } from 'mysql2/promise'
+import { log } from '../../utils';
 import { getDataByErshou } from './apis';
 import { area } from './area';
 
@@ -14,19 +15,27 @@ const beikeTask = async () => {
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE
   });
-
-  for (let index = 0; index < area.length; index++) {
-    const item = area[index];
-    const [err, supply] = await to(getDataByErshou(item.id, item.name, item.district_pinyin))
-    if (err) {
-      console.log(err)
+  try {
+    for (let index = 0; index < area.length; index++) {
+      const item = area[index];
+      const [err, supply] = await to(getDataByErshou(item.id, item.name, item.district_pinyin))
+      if (err) {
+        log('抓取接口失败~')
+        console.log(err)
+        return
+      }
+      const [err2, res] = await to(connection.query(`insert into beike set ?`, supply))
+      if (err2) {
+        log('插入数据失败~')
+        console.log(err2)
+        return
+      }
     }
-    const [err2, [rows, fields]] = await to(connection.query(`insert into beike set ?`, supply))
-    if (err2) {
-      console.log(err2)
-    }
+    log(`贝壳数据抓取结束~`)
+  } catch (error) {
+    log('抓取失败~')
+    console.log(error)
   }
-  console.log(`贝壳数据抓取结束~`)
   connection.destroy()
 }
 

@@ -5,6 +5,7 @@
   "author": "hyc",
   "license": "MIT",
   "scripts": {
+    "dev": "nodemon --watch src --ext ts,json,js --exec \"yarn build && node dist/main.js\"",
     "build": "webpack --env mode=production",
     "watch": "webpack --watch --env mode=development",
     "start": "node dist/main"
@@ -13,6 +14,7 @@
     "@types/node": "^18.11.18",
     "dotenv-webpack": "^8.0.1",
     "node-polyfill-webpack-plugin": "^2.0.1",
+    "nodemon": "^2.0.20",
     "ts-loader": "^9.4.2",
     "typescript": "^4.9.4",
     "webpack": "^5.75.0",

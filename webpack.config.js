@@ -3,7 +3,9 @@ const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
 const Dotenv = require('dotenv-webpack');
 
+
 module.exports = (env) => {
+  const isDEV = env.mode === 'development'
   console.log('Production: ', env); // true
   return {
     target: 'node',
@@ -13,8 +15,8 @@ module.exports = (env) => {
       path: path.resolve(__dirname, 'dist'),
       clean: true,
     },
-    mode: env.mode === 'development' ? 'development' : 'production', // production,
-    devtool: 'inline-source-map',
+    mode: isDEV ? 'development' : 'production', // production,
+    devtool: isDEV ? 'eval-cheap-source-map' : 'source-map',
     devServer: {
       static: './dist',
     },

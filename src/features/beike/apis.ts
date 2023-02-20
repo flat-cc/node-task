@@ -36,12 +36,12 @@ export const getDataByErshou = async (district_id?: number | string, district_na
   const data = await requestMiddleware(axios.get(BEIKE_URL, { params }))
   const { supply_index } = data;
   const supply: {[x:string]: any} = {
-    quoted_price: data.price_plot[-1]?.series?.[0].data.at(-1),
-    beike_price: data.price_plot[-1]?.series?.[1].data.at(-1),
+    quoted_price: data?.price_plot?.[-1]?.series?.[0].data.at(-1) || null,
+    beike_price: data?.price_plot?.[-1]?.series?.[1].data.at(-1) || null,
     district_name,
     create_time: dayjs().add(-1, 'day').format('YYYY-MM-DD')
   }
-  supply_index.map((item: { key: string; num: any }) => {
+  supply_index?.map((item: { key: string; num: any }) => {
     supply[item.key.replace("yd_", "")] = item.num
   })
 
