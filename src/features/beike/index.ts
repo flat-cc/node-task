@@ -5,7 +5,10 @@ import { getDataByErshou } from './apis';
 import { area } from './area';
 
 
-
+/**
+ * 贝壳二手房数据爬取
+ * @returns 
+ */
 const beikeTask = async () => {
   // create the connection to database
   const connection = await createConnection({
@@ -36,7 +39,7 @@ const beikeTask = async () => {
     log('抓取失败~')
     console.log(error)
   }
-  connection.destroy()
+  connection.end()
 }
 
 
